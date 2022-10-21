@@ -17,26 +17,27 @@ module alu(DATA1, DATA2, RESULT, SELECT, ZERO);
     reg [7:0] RightShiftResult;
 
     barrelShifter RightLogicalShift(DATA1, DATA2[7:5], RightShiftResult);
-        always@(DATA1, DATA2, SELECT) begin
-            case(SELECT)
-            3'b000:
-            #1 RESULT = DATA2; //Forward
-            3'b001:
-            #2 RESULT = DATA1 + DATA2; //add and sub
-            3'b010:
-            #1 RESULT = DATA1 & DATA2; //AND
-            3'b011:
-            #1 RESULT = DATA1 | DATA2; //OR
-            3'b100:
-            RESULT = RightShiftResult;
-            3'b101:
-            RESULT = 8'b00000000; 
-            3'b110:
-            RESULT = 8'b00000000; 
-            3'b111:
-            RESULT = 8'b00000000;
-            endcase
-        end
+
+    always@(DATA1, DATA2, SELECT) begin
+        case(SELECT)
+        3'b000:
+        #1 RESULT = DATA2; //Forward
+        3'b001:
+        #2 RESULT = DATA1 + DATA2; //add and sub
+        3'b010:
+        #1 RESULT = DATA1 & DATA2; //AND
+        3'b011:
+        #1 RESULT = DATA1 | DATA2; //OR
+        3'b100:
+        RESULT = RightShiftResult;
+        3'b101:
+        RESULT = 8'b00000000; 
+        3'b110:
+        RESULT = 8'b00000000; 
+        3'b111:
+        RESULT = 8'b00000000;
+        endcase
+    end
 
     //Zero bit
     always@(RESULT) begin
